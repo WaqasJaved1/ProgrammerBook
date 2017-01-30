@@ -1,25 +1,284 @@
 <!DOCTYPE html>
+<!-- saved from url=(0060)http://www.w3schools.com/w3css/tryw3css_templates_social.htm -->
 <html>
 
-  <head>
-    <title>NodeJS Starter Application</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Programmer Book</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="stylesheets/style.css">
-  </head>
+    <link rel="stylesheet" href="./W3.CSS_files/w3.css">
+    <link rel="stylesheet" href="./W3.CSS_files/w3-theme-blue-grey.css">
+    <link rel="stylesheet" href="./W3.CSS_files/css">
+    <link rel="stylesheet" href="./W3.CSS_files/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: "Open Sans", sans-serif
+    }
+    </style>
+</head>
 
-  <body>
-    <table>
-      <tr>
-        <td style= "width:30%;">
-          <img class = "newappIcon" src="images/newapp-icon.png">
-        <td>
-            <h1>Hi there!</h1>
-          <p>Thanks for creating a
-            <span class = "blue">NodeJS Starter Application</span>.
-            To get started see the Start Coding guide under your app in your dashboard.
-    </table>
-  </body>
+<body class="w3-theme-l5" ng-app="profile" ng-controller="profile_controller">
+    <script type="text/javascript">
+    $.ajax({
+        url: '/checklogin',
+        type:"get",
+        success: function(result2) {
+            if (result2) {
+                location = result2;
+            }
+        }
+
+    });
+    </script>
+    <!--Login Successfull alert-->
+    <div id="id01" class="w3-modal" style="width:">
+        <div class="w3-modal-content w3-card-4" style="width:30%;height:30%;">
+            <header class="w3-container w3-teal">
+                <h2 id="ls">Login Successfull</h2>
+                <h2 id="rs">Registration Successfull</h2>
+            </header>
+            <div class="w3-modal-body" style="padding:5%;">
+                <p>Redirecting please wait
+                <span><i class="fa fa-spinner w3-spin w3-right w3-medium" style="padding:1%;font-size:64px"></i></span></p>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <div class="w3-top">
+        <form class="w3-container" onSubmit="return dologin()" name="loginform" method="POST">
+            <ul class="w3-navbar w3-theme-d2 w3-hide-small  w3-right-align w3-large">
+                <li><a href="index.html" class="w3-padding-large w3-theme-d4">Programmer Book</a></li>
+                <li class="w3-right">
+                    <button class="w3-padding-large w3-hover-white w3-btn w3-teal" title="My Account">Login</button>
+                </li>
+                <li class="w3-right">
+                    <a class="w3-hover-white" title="My Account">
+                        <input type="password" placeholder="Password" name="loginpass" required></input>
+                    </a>
+                </li>
+                <li class="w3-right">
+                    <a class="w3-hover-white" title="My Account">
+                        <input type="email" placeholder="Email" name="loginemail" required></input>
+                    </a>
+                </li>
+                <li class="w3-right" style="margin-top:0.8%;">
+                    <label id="errorlogin">* Wrong email or password</label>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="w3-top">
+        <form class="w3-container" onSubmit="return dologin()" name="loginform" method="POST">
+            <ul class="w3-navbar w3-hide-large w3-hide-medium w3-theme-d2 w3-right-align w3-large">
+                <li><a href="index.html" class="w3-padding-large w3-theme-d4">Programmer Book</a></li>
+                <li class="w3-right">
+                    <a class="w3-hover-white" title="My Account">
+                        <input type="email" placeholder="Email" required></input>
+                    </a>
+                </li>
+                <li class="w3-right">
+                    <a class="w3-hover-white" title="My Account">
+                        <input type="password" placeholder="Password" required></input>
+                    </a>
+                </li>
+                <li class="w3-right" style="margin-top:0.8%;">
+                    <label id="errorlogin2">* Wrong email or password</label>
+                </li>
+                <li class="w3-right">
+                    <button style="width:100%;" class="w3-padding-large w3-hover-white w3-btn w3-teal" title="My Account">Login</button>
+
+                </li>
+            </ul>
+        </form>
+    </div>
+    <!-- Page Container -->
+    <div class="w3-container w3-content" style="max-width:1400px;margin-top:70px">
+        <!-- The Grid -->
+        <div class="w3-row">
+            <!-- Left Column -->
+            <div class="w3-col m7 w3-hide-small">
+                <div class="w3-container w3-card-2 w3-white w3-round w3-margin">
+                    <img src="./Icons/tech.png " class="w3-padding" width="100%">
+                </div>
+                <br>
+            </div>
+            <div style="height:130px;" class="w3-container w3-hide-medium w3-hide-large"></div>
+            <!-- Middle Column -->
+            <div class="w3-col m5">
+                <div class="w3-container w3-card-2 w3-white w3-round w3-margin">
+                    <br>
+                    <img src="./Icons/icon-reflective.png" alt="Avatar" class="w3-left w3-circle w3-margin-right w3-hide-small " style="width:60px">
+                    <h4>Sign Up</h4>
+                    <br>
+                    <h6>Join the dream place</h6>
+                    <hr class="w3-clear">
+                    <form class="w3-container" onSubmit="return sendregisterdata()" method="POST">
+                        <div class="w3-half" style="">
+                            <label>First Name</label>
+                            <input class="w3-input w3-border" type="text" name="first_name" required>
+                        </div>
+                        <div class="w3-half">
+                            <label>Last Name</label>
+                            <input style="margin-left:2%;" class="w3-input w3-border" type="text" name="last_name" required>
+                        </div>
+                        <label>Email</label>
+                        <label class="w3-text-red" id="alert-email">* already in use</label>
+                        <input class="w3-input w3-border" type="email" name="email" id="email" placeholder="Must be unique" required>
+                        <label>Password</label>
+                        <input class="w3-input w3-border" type="password" placeholder="Min 6 chars" name="password" id="password" pattern=".{6,}" title="6 characters minimum" require required>
+                        <label>Confirm Password</label>
+                        <input class="w3-input w3-border" type="password" name="cpassword" id="cpassword" pattern=".{6,}" title="6 characters minimum" required>
+                        <input class="w3-radio" type="radio" name="gender" value="male" checked required>
+                        <label class="w3-validate">Male</label>
+                        <input class="w3-radio" type="radio" name="gender" value="female">
+                        <label class="w3-validate">Female</label>
+                        <select style="margin-top:2%" class="w3-select" name="selected_country" required>
+                            <option disabled selected>Country</option>
+                            <option ng-repeat="x in Country_name">{{x}}</option>
+                        </select>
+                        <br>
+                        <br>
+                        <label>Date of birth</label>
+                        <input type="date" name="bday" required></input>
+                        <hr class="w3-clear">
+                        <div class="w3-right-align">
+                            <button class="w3-btn w3-teal" type="submit">Register</button>
+                        </div>
+                        <br>
+                    </form>
+                </div>
+                <!-- End Grid -->
+            </div>
+            <!-- End Page Container -->
+        </div>
+        <br>
+        <!-- Footer -->
+        <footer class="w3-container w3-theme-d3 w3-padding-hor-16">
+            <h5>Footer</h5>
+        </footer>
+        <footer class="w3-container w3-theme-d5">
+            <p>Powered by <a href="" target="_blank">Procrea</a></p>
+        </footer>
+        <script>
+        var password = document.getElementById("password"),
+            confirm_password = document.getElementById("cpassword");
+        var email = document.getElementById("email");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+
+        $("#alert-email").hide();
+        $("#errorlogin").hide();
+        $("#errorlogin2").hide();
+
+
+        function resetEmail() {
+            $("#alert-email").hide();
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+        email.onkeyup = resetEmail;
+
+        function sendregisterdata() {
+            var data = $('form').serialize();
+            $.post({
+                url: '/register',
+                data,
+                success: function(result) {
+                    if (result == "duplicateemail") {
+                        //email.setCustomValidity("Email already in use.");
+                        $("#alert-email").show();
+                    } else if (result == "registered") {
+                        $("#id01").show();
+                        $("#ls").hide();
+                        $("#rs").show();
+                        directlogin();
+                    } else {
+                        alert("Unexpected error");
+                    }
+                }
+            });
+        }
+
+        function directlogin() {
+            var data = "loginemail=" + email.value + "&loginpass=" + password.value;
+
+            $.post({
+                url: '/login',
+                data,
+                success: function(result) {
+                    if (result == "success") {
+                        //email.setCustomValidity("Email already in use.");
+
+                        $.ajax({
+                            url: '/checklogin',
+                            success: function(result2) {
+                                location = result2;
+                            }
+
+                        });
+
+                    } else if (result == "unsuccess") {
+
+                        alert("Please try login again");
+                    } else {
+                        alert("Unexpected error");
+                    }
+                }
+            });
+        }
+
+
+        function dologin() {
+
+            $("#errorlogin").hide();
+            var data = $("[name='loginform']").serialize();
+            $.post({
+                url: '/login',
+                data,
+                success: function(result) {
+                    if (result == "success") {
+                        //email.setCustomValidity("Email already in use.");
+
+                        $("#id01").show();
+                        $("#ls").show();
+                        $("#rs").hide();
+
+                        $.ajax({
+                            url: '/checklogin',
+                            success: function(result2) {
+                                location = result2;
+                            }
+
+                        });
+
+                    } else if (result == "unsuccess") {
+
+                        $("#errorlogin").show();
+                        $("#errorlogin2").show();
+                    } else {
+                        alert("Unexpected error");
+                    }
+                }
+            });
+        }
+        </script>
+        <!personalised js>
+        <script src="js/controller.js"></script>
+</body>
 
 </html>

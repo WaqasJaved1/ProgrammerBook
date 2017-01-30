@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://www.w3schools.com/w3css/tryw3css_templates_social.htm -->
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Programmer Book</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./W3.CSS_files/w3.css">
+    <link rel="stylesheet" href="./W3.CSS_files/w3-theme-blue-grey.css">
+    <link rel="stylesheet" href="./W3.CSS_files/css">
+    <link rel="stylesheet" href="./W3.CSS_files/font-awesome.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: "Open Sans", sans-serif
+    }
+    </style>
+</head>
+
+<body class="w3-theme-l5" ng-app="timeline" ng-controller="timeline_controller">
+    <!-- Navbar -->
+    <div class="w3-top">
+        <ul class="w3-navbar w3-theme-d2 w3-left-align w3-large">
+            <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+                <a class="w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+            </li>
+            <li><a href="index.html" class="w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Programmer Book</a></li>
+            <li class="w3-hide-small"><a href="search.html" class="w3-padding-large w3-hover-white" title="News"><i class="fa fa-search"></i></a></li>
+            <li class="w3-hide-small"><a href="index.html" class="w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a></li>
+            <li class="w3-hide-small"><a href="timeline.html" class="w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-file"></i></a></li>
+            <li class="w3-hide-small w3-right">
+                <a href="./logout" class="w3-padding-large w3-hover-white" title="My Account"><img ng-src="{{profile.image}}" class="w3-circle" style="height:25px;width:25px" alt="Avatar"></a>
+            </li>
+        </ul>
+    </div>
+    <!-- Navbar on small screens -->
+    <div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:51px">
+        <ul class="w3-navbar w3-left-align w3-large w3-theme">
+            <li><a class="w3-padding-large" href="search.html">Find Peoples</a></li>
+            <li><a class="w3-padding-large" href="index.html">Your profile</a></li>
+            <li><a class="w3-padding-large" href="timeline.html">Timeline</a></li>
+        </ul>
+    </div>
+    <!-- Page Container -->
+    <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+        <!-- The Grid -->
+        <div class="w3-row">
+            <!-- Left Column -->
+            <div class="w3-col m3">
+                <!-- Profile -->
+                <div class="w3-card-2 w3-round w3-white">
+                    <div class="w3-container">
+                        <h4 class="w3-center">{{profile.first_name + " " + profile.last_name}}</h4>
+                        <p class="w3-center"><img ng-src="{{profile.image}}" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
+                            <img class="w3-right w3-round" style="width:10%;" alt="{{profile.selected_country}}" src="flags/{{profile.selected_country}}.png"></img>
+                        </p>
+                        <form id="uploadForm" class=" edit-item" enctype="multipart/form-data" action="/api/photo" method="post">
+                            <input type="file" name="userPhoto" />
+                            <input type="submit" class="w3-btn w3-teal" value="Upload Image" name="submit" />
+                        </form>
+                        <hr>
+                        <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> DOB: {{profile.dob}}<span class="w3-badge w3-green" style="float:right;">{{profile.followers}}</span></p>
+                        <p>
+                    </div>
+                </div>
+                <br>
+                <!-- Accordion -->
+                <div class="w3-card-2 w3-round">
+                    <div class="w3-accordion w3-white">
+                        <button onclick="myFunction(&#39;Demo1&#39;)" class="w3-btn-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i>Followers</button>
+                        <div id="Demo1" class="w3-accordion-content w3-container">
+                            <div ng-repeat="x in followers">
+                                <p><strong>{{x.first_name + " " + x.last_name}}</strong></p>
+                                <p>{{x.email}}</p>
+                                <hr>
+                            </div>
+                        </div>
+                        <button onclick="myFunction(&#39;Demo2&#39;)" class="w3-btn-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>Following</button>
+                        <div id="Demo2" class="w3-accordion-content w3-container">
+                            <div ng-repeat="x in followings">
+                                <a href = "profile.html?{{x.email}}"><p><strong>{{x.first_name + " " + x.last_name}}</strong></p>
+                                <p>{{x.email}}</p></a>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <!-- Interests -->
+                <!-- End Left Column -->
+            </div>
+            <!-- Middle Column -->
+            <div class="w3-col m8">
+                <div class="w3-container w3-card-2 w3-teal w3-round w3-margin w3-padding">
+                    <form class="w3-container" action = "/uploadProject" method="POST" enctype="multipart/form-data">
+                        
+                            <label>Title</label>
+                            <input class="w3-input w3-border" type="text" name="title" required>
+                        
+                            <label>Details</label>
+                            <textarea style="margin-left:2%;" class="w3-input w3-border" type="text" name="details" required></textarea>
+                            <br>
+
+                            <input type="file" name="userProject" required />
+                            <input type="submit" class="w3-btn w3-teal w3-right" value="Share" name="submit" />
+                        
+                        
+                        <br>
+                    </form>
+                </div>
+                <div class="w3-container w3-card-2 w3-teal w3-round w3-margin w3-padding" ng-repeat= "x in projects">
+                    <br>
+                    
+                    <h2>{{x.title}}</h2>
+                    
+                    <h4>{{x.details}}</h4>
+                    <input type="button" onclick= "{{x.projecturl}}" class="w3-btn w3-teal w3-right" value="Download" />
+                    <br>
+                </div>
+                <!-- End Middle Column -->
+            </div>
+            <!-- End Grid -->
+        </div>
+        <!-- End Page Container -->
+    </div>
+    <br>
+    <!-- Footer -->
+    <footer class="w3-container w3-theme-d3 w3-padding-hor-16">
+        <h5>Footer</h5>
+    </footer>
+    <footer class="w3-container w3-theme-d5">
+        <p>Powered by <a href="http://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </footer>
+    <script>
+    function resetIntro() {
+        var data = "intro=" + $("#intro-edit").text();
+        $.post({
+            url: '/resetIntro',
+            data,
+            success: function(result) {
+                if (result == "success") {
+                    alert("Intro Updated");
+
+                } else {
+                    alert("Please Reupdate");
+                }
+            }
+        });
+    }
+
+    // Accordion
+    function myFunction(id) {
+        var x = document.getElementById(id);
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+            x.previousElementSibling.className += " w3-theme-d1";
+        } else {
+            x.className = x.className.replace("w3-show", "");
+            x.previousElementSibling.className =
+                x.previousElementSibling.className.replace(" w3-theme-d1", "");
+        }
+    }
+
+    $("#edit-1").click(function() {
+        var t = $("#intro-edit").text();
+        $("#intro-edit").replaceWith($("<textarea id = 'intro-edit' style = 'width:100%;height:200px'>" + "</textarea>"));
+        $("#intro-edit").text(t);
+
+        $("#save-intro").show();
+    });
+
+
+    $("#add-exp").click(function() {
+        $("#experience").append('<form id = "new-exp1" name = "saveexpform" onsubmit = " return savesnewexperience()"><br><hr><input class= "w3-input" placeholder = "Position in company" name = "position" required></input><input  class= "w3-input"  placeholder = "Company Name" name = "company" required></input><input  class= "w3-input" placeholder = "Start Date" name = "start_date" required></input><input  class= "w3-input" placeholder = "End Date" name = "end_date" required></input><input  class= "w3-input" placeholder = "comments" name = "comments" required></input><button type = "button" class = "w3-btn w3-teal w3-right w3-margin-bottom save-exp" id = "save-new-exp" onclick= "savesnewexperience()">Save</button></form>');
+        $("#add-exp").hide();
+    });
+
+    $("#add-edu").click(function() {
+        $("#education").append('<form id = "new-edu1" name = "saveeduform" onsubmit = " return savesneweducation()"><br><hr><input  class= "w3-input"  placeholder = "Country" name = "country" required></input><input  class= "w3-input"  placeholder = "Degree" name = "degree" required></input><input  class= "w3-input" placeholder = "Start Year" name = "start_date" required></input><input  class= "w3-input" placeholder = "End Year" name = "end_date" required></input><button type = "button" class = "w3-btn w3-teal w3-right w3-margin-bottom save-exp" id = "save-new-exp" onclick= "savesneweducation()">Save</button></form>');
+        $("#add-edu").hide();
+    });
+
+    $("#add-ski").click(function() {
+        $("#skills").append('<form id = "new-skill1" name = "saveskiform" onsubmit = " return savesskilleducation()"><br><hr><input  class= "w3-input"  placeholder = "Skill" name = "skill" required><select style="margin-top:2%" class="w3-select" name="level" required><option disabled selected>Level</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select><button type = "button" class = "w3-btn w3-teal w3-right w3-margin-bottom save-exp" id = "save-new-skill" onclick= "savesnewskill()">Save</button></form>');
+        $("#add-ski").hide();
+    });
+
+
+
+    $("#save-intro").hide();
+    $("#save-intro").click(function() {
+        var t = $("#intro-edit").val();
+        $("#intro-edit").replaceWith($('<pre id= "intro-edit" style = "white-space:pre-wrap">' + "</pre>"));
+        $("#intro-edit").text(t);
+        $("#save-intro").hide();
+        resetIntro();
+    });
+
+    function savesnewexperience() {
+        var data = $("[name='saveexpform']").serialize();
+        $.post({
+            url: '/addnewexp',
+            data,
+            success: function(result) {
+                if (result == "success") {
+                    //email.setCustomValidity("Email already in use.");
+                    location.reload();
+
+                } else {
+                    alert("Unexpected error");
+                }
+            }
+        });
+    }
+
+    function savesnewskill() {
+        var data = $("[name='saveskiform']").serialize();
+        $.post({
+            url: '/addnewski',
+            data,
+            success: function(result) {
+                if (result == "success") {
+                    //email.setCustomValidity("Email already in use.");
+                    location.reload();
+
+                } else {
+                    alert("Unexpected error");
+                }
+            }
+        });
+    }
+
+    function savesneweducation() {
+        var data = $("[name='saveeduform']").serialize();
+        $.post({
+            url: '/addnewedu',
+            data,
+            success: function(result) {
+                if (result == "success") {
+                    //email.setCustomValidity("Email already in use.");
+                    location.reload();
+
+                } else {
+                    alert("Unexpected error");
+                }
+            }
+        });
+    }
+
+
+    function editexperience(x) {
+        var data = $("[name='edit-expx" + x + "']").serialize();
+        data += ("&ID=" + x);
+        $.post({
+            url: '/editexp',
+            data,
+            success: function(result) {
+                if (result == "success") {
+                    //email.setCustomValidity("Email already in use.");
+                    location.reload();
+
+                } else {
+                    alert("Unexpected error");
+                }
+            }
+        });
+    }
+
+    function editskills(x) {
+        var data = $("[name='edit-skix" + x + "']").serialize();
+        data += ("&ID=" + x);
+        $.post({
+            url: '/editski',
+            data,
+            success: function(result) {
+                if (result == "success") {
+                    //email.setCustomValidity("Email already in use.");
+                    location.reload();
+
+                } else {
+                    alert("Unexpected error");
+                }
+            }
+        });
+    }
+
+    function editeducation(x) {
+        var data = $("[name='edit-edux" + x + "']").serialize();
+        data += ("&ID=" + x);
+        $.post({
+            url: '/editedu',
+            data,
+            success: function(result) {
+                if (result == "success") {
+                    //email.setCustomValidity("Email already in use.");
+                    location.reload();
+
+                } else {
+                    alert("Unexpected error");
+                }
+            }
+        });
+    }
+
+
+
+
+
+
+    $(".edit-item").each(function() {
+        $(this).hide();
+    });
+
+    $(".edit-exp").each(function() {
+        $(this).hide();
+    });
+
+    $(".save-exp").each(function() {
+        $(this).hide();
+    });
+
+    $(".save-edu").each(function() {
+        $(this).hide();
+    });
+
+    $(".save-ski").each(function() {
+        $(this).hide();
+    });
+
+
+    $(".edit-btn").click(function() {
+        $(".edit-item").each(function() {
+            $(this).show();
+        });
+        $(".edit-btn").hide();
+
+    });
+
+    $("#edit-done").click(function() {
+        $(".edit-item").each(function() {
+            $(this).hide();
+        });
+        $(".edit-btn").show();
+
+    });
+
+    // Used to toggle the menu on smaller screens when clicking on the menu button
+    function openNav() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+    </script>
+    <!personalised js>
+    <script src="js/controllertimeline.js"></script>
+</body>
+
+</html>
